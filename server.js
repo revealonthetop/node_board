@@ -11,7 +11,7 @@
 
 const express = require('express');
 const app = express();
-
+const port = 8081;
 
 const dotenv = require('dotenv').config();
 
@@ -49,17 +49,18 @@ app.set('view engine', 'ejs');
 
 app.use("/public",express.static('public'));
 
+const DB_URL = 'mongodb+srv://admin:1234@cluster0.ghyatym.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 //MongoDB 연동
 let mydb;
 const mongoClient = require('mongodb').MongoClient;
-const url = process.env.DB_URL;
+const url = DB_URL;
 
 
 mongoClient.connect(url).then(client => {
     console.log('몽고DB 접속');
     mydb = client.db('myboard');
 
-    app.listen(process.env.PORT, function () {
+    app.listen(port, function () {
         console.log(`서버 동작중 at http://localhost:${port} 으로 서버 대기중/`);
     });
 })
